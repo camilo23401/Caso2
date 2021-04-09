@@ -7,10 +7,11 @@ public class PrimerThread extends Thread{
 	private int[] secuencia;
 	private int[] edad;
 	private ArrayList<Integer> buffer;
+	private int numMarcos;
 
 	private int fallosPag;
 	
-	public PrimerThread(int[] pSecuencia, int[] pRamFake, int[] pTablaPags,  int[] edad, ArrayList<Integer> buffer)
+	public PrimerThread(int[] pSecuencia, int[] pRamFake, int[] pTablaPags,  int[] edad, ArrayList<Integer> buffer, int numMarcos)
 	{
 		ramFake = pRamFake;
 		tablaPags = pTablaPags;
@@ -18,10 +19,12 @@ public class PrimerThread extends Thread{
 		fallosPag = 0;
 		this.edad = edad;
 		this.buffer = buffer;
+		this.numMarcos = numMarcos;
 	}
 	
 	public void run()
 	{
+		int cargadoARam = 0;
 		for(int i=0;i<secuencia.length;i++)
 		{
 			try
@@ -29,8 +32,15 @@ public class PrimerThread extends Thread{
 				int actual = secuencia[i];
 				synchronized (ramFake){
 					buffer.add(actual);
+					if(cargadoARam<numMarcos)
+					{
+						fallosPag++;
+						ramFake[cargadoARam] = actual;
+						tablaPags[actual] = cargadoARam;
+						cargadoARam++;
+					}
 					//Revisar si la pagina est� en "ram" con la tabla de p�ginas
-					if (tablaPags[actual] == -1){
+					else if (tablaPags[actual] == -1){
 						//Si no est�, fallo de pag
 						fallosPag++;
 						//Reemplazar por la pag de la ram menos llamada

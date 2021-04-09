@@ -9,14 +9,14 @@ public class Principal {
 	private static int numPaginas;
 	private static int nivLocalidad;
 	
-	private static int[] ramFake = {4,17,1,15,7,8,6,17};
+	private static int[] ramFake = {0,0,0,0,0,0,0,0};
 	private static int[] edad = {0,0,0,0,0,0,0,0};	//mismo tamaño que la ram
 	private static int[] tablaPags;
 	private static int[] secuencia;
 	
 	public static void main(String[] args) {
 		try {
-			FileReader reader = new FileReader("/Users/nicolasortega/Desktop/Caso2/Caso2/data/referencias4.txt");
+			FileReader reader = new FileReader("data/referencias3.txt");
 			BufferedReader br =  new BufferedReader(reader); 
 
 			numMarcos = Integer.parseInt(br.readLine());
@@ -32,10 +32,7 @@ public class Principal {
 			br.close();
 
 			tablaPags = new int[numPaginas];
-			for (i=0; i<8; i++){
-				tablaPags[i] = i;
-			}
-			for (i=8; i<numPaginas; i++){
+			for (i=0; i<numPaginas; i++){
 				tablaPags[i] = -1;
 			}
 			
@@ -45,7 +42,7 @@ public class Principal {
 			
 			ArrayList<Integer> buffer = new ArrayList<Integer>();
 			
-			PrimerThread primero = new PrimerThread(secuencia, ramFake, tablaPags, edad, buffer);
+			PrimerThread primero = new PrimerThread(secuencia, ramFake, tablaPags, edad, buffer, numMarcos);
 			SegundoThread segundo = new SegundoThread(ramFake, edad, buffer);
 			
 			primero.start();
