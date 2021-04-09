@@ -1,16 +1,23 @@
+import java.util.ArrayList;
+
 public class PrimerThread extends Thread{
 	
 	private int[] ramFake;
 	private int[] tablaPags;
 	private int[] secuencia;
+	private int[] edad;
+	private ArrayList<Integer> buffer;
+
 	private int fallosPag;
 	
-	public PrimerThread(int[] pSecuencia, int[] pRamFake, int[] pTablaPags)
+	public PrimerThread(int[] pSecuencia, int[] pRamFake, int[] pTablaPags,  int[] edad, ArrayList<Integer> buffer)
 	{
 		ramFake = pRamFake;
 		tablaPags = pTablaPags;
 		secuencia = pSecuencia;
 		fallosPag = 0;
+		this.edad = edad;
+		this.buffer = buffer;
 	}
 	
 	public void run()
@@ -20,17 +27,39 @@ public class PrimerThread extends Thread{
 			try
 			{
 				int actual = secuencia[i];
-				//Revisar si la secuencia está en "ram" con la tabla de páginas
-				//Si si está, solo se hace el corrimiento 
-				//Si no está, añade la página al buffer para que el algoritmo de envejecimiento la tenga en cuenta
-				this.sleep(5);
+				synchronized (ramFake){
+					buffer.add(actual);
+					//Revisar si la pagina estï¿½ en "ram" con la tabla de pï¿½ginas
+					if (tablaPags[actual] == -1){
+						//Si no estï¿½, fallo de pag
+						fallosPag++;
+						//Reemplazar por la pag de la ram menos llamada
+						int index = indicePagMenosUsada();
+						tablaPags[ramFake[index]] = -1;
+						ramFake[index] = actual;
+						tablaPags[actual] = index;
+					}
+				}
+
+				Thread.sleep(5);
 			}
 			catch(Exception e)
 			{
-				e.getMessage();
+				e.printStackTrace();
 			}
 		}
-		
+		System.out.println(fallosPag);
+	}
+
+	private int indicePagMenosUsada(){
+		synchronized (edad){
+			int index = 0;
+			for (int i=1; i<edad.length; i++){
+				if (edad[i]<edad[index])
+				index = i;
+			}
+			return index;
+		}
 	}
 
 }
