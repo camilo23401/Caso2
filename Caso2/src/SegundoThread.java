@@ -1,4 +1,4 @@
 
-public class SegundoThread {
+public class SegundoThread extends Thread {
 
 }
