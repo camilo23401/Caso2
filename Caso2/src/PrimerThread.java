@@ -8,7 +8,6 @@ public class PrimerThread extends Thread {
 	private int[] edad;
 	private ArrayList<Integer> buffer;
 	private int numMarcos;
-
 	private int fallosPag;
 
 	public PrimerThread(ArrayList<Integer> pSecuencia, int[] pRamFake, int[] pTablaPags, int[] edad,
@@ -29,6 +28,7 @@ public class PrimerThread extends Thread {
 				int actual = secuencia.get(i);
 				synchronized (ramFake) {
 					buffer.add(actual);
+					// Revisar si la pagina est� en "ram" con la tabla de p�ginas
 					if(tablaPags[actual] == -1)
 					{
 						fallosPag++;
@@ -38,10 +38,8 @@ public class PrimerThread extends Thread {
 							tablaPags[actual] = cargadoARam;
 							cargadoARam++;
 						}
-						// Revisar si la pagina est� en "ram" con la tabla de p�ginas
 						else 
-						{ // Si no est�, fallo de pag
-							// Reemplazar por la pag de la ram menos llamada
+						{ 
 							int index = indicePagMenosUsada();
 							tablaPags[ramFake[index]] = -1;
 							ramFake[index] = actual;
@@ -57,6 +55,7 @@ public class PrimerThread extends Thread {
 			}
 		}
 		System.out.println("Número total de fallos de página: " + fallosPag);
+		System.out.println("Fin Thread 1");
 	}
 
 	public int indicePagMenosUsada() {
@@ -66,20 +65,6 @@ public class PrimerThread extends Thread {
 				index = i;
 		}
 		return index;
-
-	}
-	
-	public boolean ramContains(int pagina)
-	{
-		boolean rta = false;
-		for(int i=0; i<ramFake.length;i++)
-		{
-			if(ramFake[i]==pagina)
-			{
-				rta = true;
-			}
-		}
-		return rta;
 	}
 
 }
