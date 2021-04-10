@@ -14,7 +14,7 @@ public class Principal {
 	
 	public static void main(String[] args) {
 		try {
-			FileReader reader = new FileReader("Caso2/data/referencias4_8.txt");
+			FileReader reader = new FileReader("./data/referencias4_8.txt");
 			BufferedReader br =  new BufferedReader(reader); 
 
 			numMarcos = Integer.parseInt(br.readLine());
@@ -22,6 +22,12 @@ public class Principal {
 
 			ramFake = new int[numMarcos];
 			edad = new int[numMarcos];
+			
+			for(int i=0;i<numMarcos;i++)
+			{
+				ramFake[i]=-1;
+			}
+			
 			ArrayList<Integer> buffer = new ArrayList<Integer>();
 
 			br.readLine();

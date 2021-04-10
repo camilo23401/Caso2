@@ -27,25 +27,27 @@ public class PrimerThread extends Thread {
 		for (int i = 0; i < secuencia.size(); i++) {
 			try {
 				int actual = secuencia.get(i);
-
 				synchronized (ramFake) {
 					buffer.add(actual);
-					if (cargadoARam < numMarcos) {
+					if(tablaPags[actual] == -1)
+					{
 						fallosPag++;
-						ramFake[cargadoARam] = actual;
-						edad[cargadoARam] = 0;
-						tablaPags[actual] = cargadoARam;
-						cargadoARam++;
-					}
-					// Revisar si la pagina est� en "ram" con la tabla de p�ginas
-					else if (tablaPags[actual] == -1) { // Si no est�, fallo de pag
-						fallosPag++;
-						// Reemplazar por la pag de la ram menos llamada
-						int index = indicePagMenosUsada();
-						tablaPags[ramFake[index]] = -1;
-						ramFake[index] = actual;
-						edad[index] = 0;
-						tablaPags[actual] = index;
+						if (cargadoARam < numMarcos) {
+							ramFake[cargadoARam] = actual;
+							edad[cargadoARam] = 0;
+							tablaPags[actual] = cargadoARam;
+							cargadoARam++;
+						}
+						// Revisar si la pagina est� en "ram" con la tabla de p�ginas
+						else 
+						{ // Si no est�, fallo de pag
+							// Reemplazar por la pag de la ram menos llamada
+							int index = indicePagMenosUsada();
+							tablaPags[ramFake[index]] = -1;
+							ramFake[index] = actual;
+							edad[index] = 0;
+							tablaPags[actual] = index;
+						}
 					}
 				}
 
@@ -57,7 +59,7 @@ public class PrimerThread extends Thread {
 		System.out.println("Número total de fallos de página: " + fallosPag);
 	}
 
-	private int indicePagMenosUsada() {
+	public int indicePagMenosUsada() {
 		int index = 0;
 		for (int i = 1; i < edad.length; i++) {
 			if (edad[i] < edad[index])
@@ -65,6 +67,19 @@ public class PrimerThread extends Thread {
 		}
 		return index;
 
+	}
+	
+	public boolean ramContains(int pagina)
+	{
+		boolean rta = false;
+		for(int i=0; i<ramFake.length;i++)
+		{
+			if(ramFake[i]==pagina)
+			{
+				rta = true;
+			}
+		}
+		return rta;
 	}
 
 }
