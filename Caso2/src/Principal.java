@@ -6,9 +6,10 @@ public class Principal {
 
 	private static int numMarcos;
 	private static int numPaginas;
+	private static double ptgeLocalidad;
 
 	private static int[] ramFake;
-	private static int[] edad;	//mismo tamaÃ±o que la ram
+	private static int[] edad;
 	private static int[] tablaPags;
 	private static ArrayList<Integer> secuencia;
 
@@ -26,10 +27,17 @@ public class Principal {
 			for(int i=0;i<numMarcos;i++){
 				ramFake[i] = -1;
 			}
+			
+			
 
 			ArrayList<Integer> buffer = new ArrayList<Integer>();
 
-			br.readLine();
+			ptgeLocalidad = Double.parseDouble(br.readLine());
+			
+			System.out.println("Información de la referencia");
+			System.out.println("   # de marcos: " + numMarcos);
+			System.out.println("   # de paginas: " + numPaginas);
+			System.out.println("   % de localidad: " + ptgeLocalidad);
 
 			String linea;
 			secuencia =  new ArrayList<Integer>();

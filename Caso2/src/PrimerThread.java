@@ -28,7 +28,6 @@ public class PrimerThread extends Thread {
 				int actual = secuencia.get(i);
 				synchronized (ramFake) {
 					buffer.add(actual);
-					// Revisar si la pagina est� en "ram" con la tabla de p�ginas
 					if(tablaPags[actual] == -1)
 					{
 						fallosPag++;
@@ -54,8 +53,7 @@ public class PrimerThread extends Thread {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Número total de fallos de página: " + fallosPag);
-		System.out.println("Fin Thread 1");
+		System.out.println("Numero total de fallos de pagina: " + fallosPag);
 	}
 
 	public int indicePagMenosUsada() {

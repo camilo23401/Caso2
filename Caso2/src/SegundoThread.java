@@ -15,7 +15,7 @@ public class SegundoThread extends Thread {
 
     public void run(){
         while (true){
-            synchronized (ramFake){
+            synchronized (ramFake) {
                 for (int i=0; i<ramFake.length; i++){
                     edad[i] = edad[i] >> 1;
                     
@@ -33,6 +33,5 @@ public class SegundoThread extends Thread {
             }
             if (!primero.isAlive()) break;
         }
-        System.out.println("Fin Thread 2");
     }
 }
