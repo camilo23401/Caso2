@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class SegundoThread extends Thread {
+public class GestorEnvejecimiento extends Thread {
     private int[] ramFake;
     private int[] edad;
     private ArrayList<Integer> buffer;
-    private PrimerThread primero;
+    private GestorReferencias primero;
 
-    public SegundoThread (int[] ramFake, int[] edad, ArrayList<Integer> buffer, PrimerThread primero){
+    public GestorEnvejecimiento (int[] ramFake, int[] edad, ArrayList<Integer> buffer, GestorReferencias primero){
         this.edad = edad;
         this.ramFake = ramFake;
         this.buffer = buffer;

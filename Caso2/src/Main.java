@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class Principal {
+public class Main {
 
 	private static int numMarcos;
 	private static int numPaginas;
@@ -15,7 +15,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		try {
-			FileReader reader = new FileReader("./data/referencias1.txt");
+			FileReader reader = new FileReader("./data/referencias7.txt");
 			BufferedReader br =  new BufferedReader(reader);
 
 			numMarcos = Integer.parseInt(br.readLine());
@@ -53,8 +53,8 @@ public class Principal {
 			}
 
 
-			PrimerThread primero = new PrimerThread(secuencia, ramFake, tablaPags, edad, buffer, numMarcos);
-			SegundoThread segundo = new SegundoThread(ramFake, edad, buffer, primero);
+			GestorReferencias primero = new GestorReferencias(secuencia, ramFake, tablaPags, edad, buffer, numMarcos);
+			GestorEnvejecimiento segundo = new GestorEnvejecimiento(ramFake, edad, buffer, primero);
 
 			primero.start();
 			segundo.start();

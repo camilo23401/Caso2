@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class PrimerThread extends Thread {
+public class GestorReferencias extends Thread {
 
 	private int[] ramFake;
 	private int[] tablaPags;
@@ -10,7 +10,7 @@ public class PrimerThread extends Thread {
 	private int numMarcos;
 	private int fallosPag;
 
-	public PrimerThread(ArrayList<Integer> pSecuencia, int[] pRamFake, int[] pTablaPags, int[] edad,
+	public GestorReferencias(ArrayList<Integer> pSecuencia, int[] pRamFake, int[] pTablaPags, int[] edad,
 			ArrayList<Integer> buffer, int numMarcos) {
 		ramFake = pRamFake;
 		tablaPags = pTablaPags;
